@@ -2,30 +2,44 @@
 using Microsoft.AspNetCore.Mvc;
 using To_do_app.Models;
 
-namespace To_do_app.Controllers;
-
-public class HomeController : Controller
+namespace To_do_app.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private static List<ToDo> toDoList = new List<ToDo>();
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+        public IActionResult Index()
+        {
+            return View(toDoList);
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+        [HttpPost]
+        public IActionResult Add(string description)
+        {
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                var newToDo = new ToDo
+                {
+                    Id = Guid.NewGuid(),
+                    Description = description,
+                    IsDone = false,
+                };
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                toDoList.Add(newToDo);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult MarkAsDone(Guid id)
+        {
+            var todo = toDoList.Find(t => t.Id == id);
+            if (todo != null)
+            {
+                todo.IsDone = true;
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
