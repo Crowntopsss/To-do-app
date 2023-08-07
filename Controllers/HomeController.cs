@@ -23,6 +23,7 @@ namespace To_do_app.Controllers
                     Id = Guid.NewGuid(),
                     Description = description,
                     IsDone = false,
+                    CompletionDate = null
                 };
 
                 toDoList.Add(newToDo);
@@ -38,7 +39,9 @@ namespace To_do_app.Controllers
             if (todo != null)
             {
                 todo.IsDone = true;
+                todo.CompletionDate = DateTime.Now;
             }
+
             return RedirectToAction("Index");
         }
     }
