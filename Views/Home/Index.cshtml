@@ -1,28 +1,39 @@
 ﻿@model List<ToDo>
 <h2>To-Do List</h2>
 
+<!-- Form to add new To-Do -->
 <form asp-controller="Home" asp-action="Add" method="post">
     <input type="text" name="description" placeholder="Enter new To-Do" required />
     <button type="submit">Add</button>
 </form>
 
+<!-- List of To-Do items -->
 <ul class="todo-list">
     @foreach (var item in Model)
     {
         <li class="todo-item">
+            <!-- Check if the To-Do item is done -->
             @if (item.IsDone)
             {
+                <!-- Display completed To-Do with a strikethrough -->
                 <del>@item.Description</del>
+                
+                <!-- Render partial view for displaying completion date -->
                 <partial name="_CompletionDatePartial" model="item.CompletionDate" />
             }
             else
             {
+                <!-- Display pending To-Do -->
                 @item.Description
+                
+                <!-- Form to mark To-Do as done -->
                 <form asp-controller="Home" asp-action="MarkAsDone" method="post">
                     <input type="hidden" name="id" value="@item.Id" />
                     <button type="submit">Mark as Done</button>
                 </form>
             }
+            
+            <!-- Render partial view for displaying creation date -->
             <partial name="_CreationDatePartial" model="item.CreationDate" />
         </li>
     }
