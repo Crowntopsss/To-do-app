@@ -23,7 +23,8 @@ namespace To_do_app.Controllers
                     Id = Guid.NewGuid(),
                     Description = description,
                     IsDone = false,
-                    CompletionDate = null
+                    CompletionDate = null,
+                    CreationDate = DateTime.Now 
                 };
 
                 toDoList.Add(newToDo);

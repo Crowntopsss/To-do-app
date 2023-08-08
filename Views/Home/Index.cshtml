@@ -1,5 +1,4 @@
 ﻿@model List<ToDo>
-
 <h2>To-Do List</h2>
 
 <form asp-controller="Home" asp-action="Add" method="post">
@@ -11,11 +10,23 @@
     @foreach (var item in Model)
     {
         <li>
-            @item.Description
-            <form asp-controller="Home" asp-action="MarkAsDone" method="post">
-                <input type="hidden" name="id" value="@item.Id" />
-                <button type="submit">Mark as Done</button>
-            </form>
+            @if (item.IsDone)
+            {
+                <del>@item.Description</del> 
+                @if (item.CompletionDate.HasValue)
+                {
+                    <span>Completed on @item.CompletionDate.HasValue ? $"(Completed on {item.CompletionDate.Value.ToString("yyyy-MM-dd")})" : ""</span>
+                }
+            }
+            else
+            {
+                @item.Description
+                <form asp-controller="Home" asp-action="MarkAsDone" method="post">
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <button type="submit">Mark as Done</button>
+                </form>
+            }
+            <span>Created on @item.CreationDate.ToString("yyyy-MM-dd")</span>
         </li>
     }
 </ul>

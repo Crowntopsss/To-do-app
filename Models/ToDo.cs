@@ -8,5 +8,6 @@ namespace To_do_app.Models
         public string Description { get; set; }
         public bool IsDone { get; set; }
         public DateTime? CompletionDate { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }
