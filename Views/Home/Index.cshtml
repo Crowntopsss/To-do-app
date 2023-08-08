@@ -6,17 +6,14 @@
     <button type="submit">Add</button>
 </form>
 
-<ul>
+<ul class="todo-list">
     @foreach (var item in Model)
     {
-        <li>
+        <li class="todo-item">
             @if (item.IsDone)
             {
-                <del>@item.Description</del> 
-                @if (item.CompletionDate.HasValue)
-                {
-                    <span>Completed on @item.CompletionDate.HasValue ? $"(Completed on {item.CompletionDate.Value.ToString("yyyy-MM-dd")})" : ""</span>
-                }
+                <del>@item.Description</del>
+                <partial name="_CompletionDatePartial" model="item.CompletionDate" />
             }
             else
             {
@@ -26,7 +23,7 @@
                     <button type="submit">Mark as Done</button>
                 </form>
             }
-            <span>Created on @item.CreationDate.ToString("yyyy-MM-dd")</span>
+            <partial name="_CreationDatePartial" model="item.CreationDate" />
         </li>
     }
 </ul>

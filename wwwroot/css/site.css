@@ -97,3 +97,19 @@ span {
 span.completed-date {
   color: #007bff;
 }
+
+/* site.css */
+.todo-list {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.todo-item del {
+  margin-right: 10px;
+}
